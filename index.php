@@ -65,51 +65,78 @@
   </script>
 
 
+<?php
+  include("Model/conexion.php");
+  include("Controller/login.php");
+?>
 
-  <!-- Botón para abrir la ventana modal -->
-  <button id="btn-abrir-modal">Iniciar Sesión</button>
+<!-- lectura de los datos a ingresar -->
+<form action="" method="post">
+<label class="login-datos" for="correo">Correo:</label>
+<div class="input-icon">
+  <input type="text" id="usuario" name="correo" required>
+  <i class="fa-solid fa-envelope"></i>
+</div><br><br>
 
-  <dialog id="modal">
-    <div class="login-form">
-      <div class="contennido-login">
-        <h1 class="login-h1">INICIAR SESIÓN</h1><br>
+<label class="login-datos" for="contrasena">Contraseña:</label>
+<div class="input-icon1">
+  <input type="password" id="contrasena" name="contrasena" required><br><br>
+  <i class="fa-solid fa-lock"></i>
+</div>
 
-        <!-- conexion con la base de datos y el controlador -->
-        <?php
-            include("model/conexion.php");
-            include("controller/login_usuarios.php");
-            ?>
+<div class="boton">
+  <input class="input-login" name="btnlogin" type="submit" value="Iniciar sesión">
+</div>
+</form>
 
-        <!-- lectura de los datos a ingresar -->
-        <form action="" method="post">
-          <label class="login-datos" for="correo">Correo:</label>
-          <div class="input-icon">
-            <input type="text" id="usuario" name="correo" required>
-            <i class="fa-solid fa-envelope"></i>
-          </div><br><br>
-
-          <label class="login-datos" for="contraseña">Contraseña:</label>
-          <div class="input-icon1">
-            <input type="password" id="contraseña" name="contraseña" required><br><br>
-            <i class="fa-solid fa-lock"></i>
-          </div>
-
-          <div class="boton">
-            <input class="input-login" name="btnlogin" type="submit" value="Iniciar sesión">
-          </div>
-        </form>
-
-        <!-- opcion para que se registre -->
-        <p class="redirigir">¿Eres nuevo? <a href="registro.php">Regístrate</a><i class="fa-solid fa-arrow-right"></i>
-        </p>
-      </div>
-    </div>
-  </dialog>
-
-  <script src="Controller/js/login.js"></script>
+<!-- opcion para que se registre -->
+<p class="redirigir">¿Eres nuevo? <a href="registro.php">Regístrate</a><i class="fa-solid fa-arrow-right"></i></p>
+  
 
 
+<?php
+  include("Model/conexion.php");
+  include("Controller/nuevo_usuario.php");
+?>
 
+<!-- lectura de los datos a ingresar -->
+<form action="" method="post">
+  <!-- Campo para el nombre -->
+  <label class="login-datos" for="nombre">Nombre:</label>
+  <div class="input-icon">
+    <input type="text" id="nombre" name="nombre" required>
+    <i class="fa-solid fa-user"></i>
+  </div><br><br>
+
+  <!-- Campo para los apellidos -->
+  <label class="login-datos" for="apellidos">Apellidos:</label>
+  <div class="input-icon">
+    <input type="text" id="apellidos" name="apellidos" required>
+    <i class="fa-solid fa-user"></i>
+  </div><br><br>
+
+  <!-- Campo para el correo -->
+  <label class="login-datos" for="correo">Correo:</label>
+  <div class="input-icon">
+    <input type="email" id="correo" name="correo" required>
+    <i class="fa-solid fa-envelope"></i>
+  </div><br><br>
+
+  <!-- Campo para la contraseña -->
+  <label class="login-datos" for="contrasena">Contraseña:</label>
+  <div class="input-icon1">
+    <input type="password" id="contrasena" name="contrasena" required><br><br>
+    <i class="fa-solid fa-lock"></i>
+  </div>
+
+  <!-- Botón para enviar el formulario -->
+  <div class="boton">
+    <input class="input-login" name="btnnuevousuario" type="submit" value="Iniciar sesión">
+  </div>
+</form>
+
+<!-- Opción para que se registre -->
+<p class="redirigir">¿Ya tienes una cuenta? <a href="registro.php">Iniciar Sesion</a><i class="fa-solid fa-arrow-right"></i></p>
 
 </head>
 
