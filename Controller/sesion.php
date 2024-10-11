@@ -38,6 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Almacenar datos del usuario en la sesión
             $_SESSION['usuario_id'] = $conexion->insert_id; // Guardar el ID del nuevo usuario
             $_SESSION['usuario_nombre'] = $nombre; // Guardar el nombre del nuevo usuario
+            $_SESSION['id'] = $conexion->insert_id; // Guardar el ID del nuevo usuario
+
 
             // Mostrar alerta de registro exitoso y redirigir al login
             echo "<script>
