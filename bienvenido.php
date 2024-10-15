@@ -12,6 +12,9 @@ if (!isset($_SESSION['usuario_id'])) {
 <html lang="es-MX">
 
 <head>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <!-- Metadatos SEO y Open Graph -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,11 +159,140 @@ if (!isset($_SESSION['usuario_id'])) {
             echo '<input type="submit" name="agregarAlCarrito" value="" class="button">';
             echo '</div>';*/
         }
-      ?>
-  </div>
+        ?>
+    </div>
+
+
+    <div id="editarProducto" style="display: none;" enctype="multipart/form-data" class="edit_producto">
+        <form id="formEditarProducto" action="../Hotel_Mar_y_Tierra/Controller/editarhbt.php" method="post" class="form">
+        <h3 class="form-title">Editar Producto</h3>
+        <input type="hidden" id="editarId" name="id">
+
+        <label for="editarNombre" class="form-label">Nombre de la habitación:</label>
+        <input type="text" id="editarNombre" name="nombre" class="form-input" required>
+
+        <label for="editarDescripcion" class="form-label">Descripción:</label>
+        <input type="text" id="editarDescripcion" name="descripcion" class="form-input" required>
+
+        <label for="editarPrecio" class="form-label">Precio por noche:</label>
+        <input type="number" id="editarPrecio" name="precio" class="form-input" required>
+
+        <label for="editarEstado" class="form-label">Estado:</label>
+        <select id="editarEstado" name="estado" class="form-input" required>
+            <option value="reservada">Reservada</option>
+            <option value="disponible">Disponible</option>
+            <option value="mantenimiento">Mantenimiento</option>
+        </select>
+
+        <label for="editarImage" class="form-label">Imagen:</label>
+        <input type="file" id="editarImage" name="imagen" class="form-input">
+
+        <label for="editarStock" class="form-label">Capacidad</label>
+        <input type="number" id="editarStock" name="capacidad" class="form-input" required>
+
+        <label for="editarTipo" class="form-label">Tipo de habitación:</label>
+        <select id="editarTipo" name="tipo" class="form-input" required>
+            <option value="standard">Standard</option>
+            <option value="suite">Suite</option>
+            <option value="deluxe">Deluxe</option>
+        </select>
+
+
+        <input type="submit" value="Editar Producto" class="form-submit">
+    </form>
+
+    </div>
+ 
+    
+
+
+    <?php
+        require_once('../Hotel_Mar_y_Tierra/Controller/metodos.php');
+        $metodos = new Productos();
+        $productos = $metodos->obtenerProductos();
+    ?>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Imagen</th>
+            <th>Capacidad</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+        <?php foreach ($productos as $producto): ?>
+        <tr>
+            <td><?php echo $producto['id']; ?></td>
+            <td><?php echo $producto['nombre_habitacion']; ?></td>
+            <td><?php echo $producto['descripcion']; ?></td>
+            <td><?php echo $producto['precio_por_noche']; ?></td>
+            <td><?php echo $producto['estado']; ?></td>
+            <td><img width="60" src="../Hotel_Mar_y_Tierra/View/Images/habitaciones/<? echo $producto['imagen']; ?>"
+                    alt="<?php echo $producto['imagen']; ?>"></td>
+            <td><?php echo $producto['capacidad']; ?></td>
+            <td><?php echo $producto['tipo_habitacion']; ?></td>
+            <td>
+                <a href="#"
+                onclick='editarProducto("<?php echo $producto['id']; ?>", "<?php echo addslashes($producto['nombre_habitacion']); ?>",
+                "<?php echo addslashes($producto['descripcion']); ?>", "<?php echo $producto['precio_por_noche']; ?>", "<?php echo $producto['estado']; ?>", "<?php echo addslashes($producto['imagen']); ?>", "<?php echo $producto['capacidad']; ?>", "<?php echo $producto['tipo_habitacion']; ?>")'>Editar</a>
+
+                |
+                <a href="#" onclick='confirmarEliminar("<?php echo $producto['id']; ?>")'>Eliminar</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
 
 
 
+
+
+    <script>
+        function editarProducto(id, nombre_habitacion, descripcion, precio_por_noche, estado, imagen, capacidad, tipo_habitacion) {
+            // Mostrar el formulario
+            document.getElementById('editarProducto').style.display = 'block';
+            
+            // Asignar los valores recibidos a los campos del formulario
+            document.getElementById('editarId').value = id;
+            document.getElementById('editarNombre').value = nombre_habitacion; // Nombre correcto de la variable
+            document.getElementById('editarDescripcion').value = descripcion;
+            document.getElementById('editarPrecio').value = precio_por_noche;
+            document.getElementById('editarStock').value = capacidad;
+            
+            // Estado de la habitación
+            document.getElementById('editarEstado').value = estado;
+
+            // No es posible asignar el valor del archivo a un campo de tipo file
+            // El valor de imagen solo puede ser manipulado al seleccionar un archivo nuevo.
+            // Si deseas mostrar la imagen actual, deberías hacerlo con una previsualización, no asignándola al campo de archivo.
+            
+            // Tipo de habitación
+            document.getElementById('editarTipo').value = tipo_habitacion;
+        }
+
+    </script>
+
+    <script>
+        function confirmarEliminar(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, bórralo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "../Hotel_Mar_y_Tierra/Controller/eliminarhbt.php?id=" + id;
+                }
+            })
+        }
+    </script>
     
 </body>
 
