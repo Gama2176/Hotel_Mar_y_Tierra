@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['usuario_nombre'] = $usuario['nombre'];
             
             // Redirigir a otra página
-            header("Location: ../bienvenido.php");
+            header("Location: ../View/Pages/bienvenido.php");
             exit();
         } else {
             // Mostrar alerta y redirigir al login

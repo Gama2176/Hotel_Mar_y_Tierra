@@ -66,18 +66,87 @@
   </script>
 </head>
 <body>
-  
-  <h1>Iniciar Sesión</h1>
-    <form action="Controller/autenticar.php" method="POST">
-        <label for="correo">Correo:</label>
-        <input type="email" name="correo" required><br>
+  <!-- Imagen de Fondo -->
+   <div class="img-fondo">
 
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" name="contrasena" required><br>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-secondary">
+      <div class="container-fluid">
+        <!-- Logo a la izquierda -->
+        <a class="navbar-brand" href="#"><img src="./View/Images/Logo.png" width="120px" height="45px" alt="Logo"></a>
 
-        <input type="submit" value="Iniciar Sesión">
-        <a href="View/Pages/login.php">¿No tienes una cuenta?, Regístrate</a>
-    </form>
+        <!-- Botón para el menú en dispositivos móviles -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Contenido del Navbar -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <!-- Secciones en el centro -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Detalles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">¿Quiénes Somos?</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Habitaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contacto</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Botón de Iniciar Sesión a la derecha -->
+        <div class="d-flex">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Iniciar Sesión
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Modal para iniciar sesión -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario de Iniciar Sesión -->
+            <h1>Iniciar Sesión</h1>
+            <form action="./Controller/autenticar.php" method="POST">
+              <div class="mb-3">
+                <label for="correo" class="form-label">Correo:</label>
+                <input type="email" class="form-control" name="correo" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="contrasena" class="form-label">Contraseña:</label>
+                <input type="password" class="form-control" name="contrasena" required>
+              </div>
+
+              <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-primary" value="Iniciar Sesión">
+              </div>
+
+              <div class="mt-3">
+                <a href="View/Pages/login.php">¿No tienes una cuenta? Regístrate</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
     
 </body>
 
