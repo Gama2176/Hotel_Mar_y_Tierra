@@ -15,7 +15,7 @@ if (isset($_GET["id"])) {
     $resultado = $metodos->eliminarProducto($id);
 
     if ($resultado) {
-        header("Location: ./bienvenido.php");
+        header("Location: ../bienvenido.php");
     } else {
         echo "Hubo un error al eliminar el producto.";
     }

@@ -249,6 +249,117 @@ class Reservaciones{
 
 
 
+
+
+    public function obtenerReservas() {
+        try {
+            $pdo = $this->db->connect();
+    
+            // Consulta SQL con el INNER JOIN para obtener datos de las tablas reservas y habitacion
+            $sql = "
+                SELECT 
+                    r.id, 
+                    r.codigo_reserva, 
+                    r.id_usuario, 
+                    r.id_habitacion, 
+                    r.fecha_entrada, 
+                    r.fecha_salida, 
+                    r.precio_total, 
+                    r.estado AS estado_reserva, 
+                    h.nombre_habitacion, 
+                    h.capacidad,
+                    h.estado AS estado_habitacion
+                FROM 
+                    reservas r
+                INNER JOIN 
+                    habitaciones h 
+                ON 
+                    r.id_habitacion = h.id
+            ";
+    
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+    
+            // Inicializa un arreglo para almacenar las reservas
+            $reservas = array();
+    
+            // Recorre los resultados y agrega cada reserva al arreglo
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $reservas[] = array(
+                    'id' => $row['id'],
+                    'codigo_reserva' => $row['codigo_reserva'],
+                    'id_usuario' => $row['id_usuario'],
+                    'id_habitacion' => $row['id_habitacion'],
+                    'nombre_habitacion' => $row['nombre_habitacion'], 
+                    'estado_habitacion' => $row['estado_habitacion'],  
+                    'fecha_entrada' => $row['fecha_entrada'],
+                    'fecha_salida' => $row['fecha_salida'],
+                    'precio_total' => $row['precio_total'],
+                    'estado_reserva' => $row['estado_reserva'], 
+                    'capacidad' => $row['capacidad'], 
+                );
+            }
+    
+            // Cierra la conexión
+            $pdo = null;
+    
+            return $reservas; // Devuelve un arreglo de reservas
+    
+        } catch (PDOException $e) {
+            // Muestra un mensaje de error detallado (esto es útil para depurar)
+            error_log("Error al obtener las reservas: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+
+    public function obtenerReservasPorId($idreserva) {
+        try {
+            $pdo = $this->db->connect();
+            
+            // Asegúrate de que el nombre de la tabla sea correcto ('habitacion' o 'habitaciones')
+            $sql = "
+                SELECT 
+                    r.id, 
+                    r.codigo_reserva, 
+                    r.id_usuario, 
+                    r.id_habitacion, 
+                    r.fecha_entrada, 
+                    r.fecha_salida, 
+                    r.precio_total, 
+                    r.estado AS estado_reserva, 
+                    h.nombre_habitacion, 
+                    h.capacidad,
+                    h.estado AS estado_habitacion
+                FROM 
+                    reservas r
+                INNER JOIN 
+                    habitaciones h  
+                ON 
+                    r.id_habitacion = h.id
+                WHERE 
+                    r.id = :idreserva
+            ";
+    
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':idreserva', $idreserva, PDO::PARAM_INT); // Uso de parámetro enlazado
+            $stmt->execute();
+    
+            // Obtener una sola reserva
+            $reserva = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Cierra la conexión
+            $pdo = null;
+    
+            return $reserva ? $reserva : false; // Devuelve una sola reserva o false si no se encuentra
+    
+        } catch (PDOException $e) {
+            // Registra el error para depuración
+            error_log("Error al obtener la reserva: " . $e->getMessage());
+            return false;
+        }
+    }
+    
 }
 
 ?>
