@@ -10,10 +10,11 @@
     <input type="hidden" name="idusuario" value="<?php echo $idusuario; ?>">
 
     <label for="fecha_entrada">Fecha de llegada:</label>
-    <input type="date" id="fecha_entrada" name="fecha_entrada" required><br>
+    <input type="date" id="fecha_entrada" name="fecha_entrada" min="<?php echo date('Y-m-d'); ?>" required><br><br>
 
     <label for="fecha_salida">Fecha de salida:</label>
-    <input type="date" id="fecha_salida" name="fecha_salida" required><br>
+    <input type="date" id="fecha_salida" name="fecha_salida" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" required><br><br>
+
 
     <input type="submit" name="btn_reservar" value="Reservar ahora">
 </form>

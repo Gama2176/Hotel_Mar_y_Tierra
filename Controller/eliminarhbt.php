@@ -16,6 +16,7 @@ if (isset($_GET["id"])) {
 
     if ($resultado) {
         echo "Exito";
+        header("Location: ../bienvenido.php");
     } else {
         echo "Hubo un error al eliminar el producto.";
     }

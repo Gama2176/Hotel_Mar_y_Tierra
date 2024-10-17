@@ -123,7 +123,7 @@ if (!isset($_SESSION['usuario_id'])) {
     <!-- Aquí se mostrarán los productos dinámicamente -->
     <?php
         // Incluye el archivo metodos.php
-        include './Controller/metodos.php';
+        include_once './Controller/metodos.php';
         // Crea una instancia de la clase Productos
         $producto = new Productos();
         // Obtiene los productos desde la base de datos
@@ -249,6 +249,46 @@ if (!isset($_SESSION['usuario_id'])) {
 
 
 
+
+
+
+
+    <div class="lista-reservas" id="reservas-container">
+    <!-- Aquí se mostrarán las reservas dinámicamente -->
+     <h1>Historial de Reservas</h1>
+    <?php
+        // Incluye el archivo metodos.php
+        include_once './Controller/metodos.php';
+        // Crea una instancia de la clase Productos
+        $reservas = new Reservaciones();
+        // Obtiene los productos desde la base de datos
+        $reservas = $reservas->obtenerReservas();
+        // Ahora puedes usar $productos en un bucle foreach
+        foreach ($reservas as $reg) {
+            // Verificar si el producto ya está en el carrito
+            
+            
+            //echo '<div class="inner-card">';
+            echo '<p class="product-description">' . $reg['nombre_habitacion'] . '</p>';
+            echo '<p class="product-description">' . $reg['id'] . '</p>';
+            echo '<p class="product-description">' . $reg['estado_reserva'] . '</p>';
+            echo '<p class="product-description">' . $reg['fecha_entrada'] . '</p>';
+            echo '<p class="product-description2">' . $reg['fecha_salida'] . '</p>';
+            echo '<p class="product-description2">' . $reg['capacidad'] . ' Personas</p>';
+            echo '<p class="product-price">$' . $reg['precio_total'] . ' MXN</p>';
+
+
+            //Agregamos un formulario que redirige al formulario de reservaciones
+            echo '<form method="post" action="./historialReservas.php">';
+            echo '<input type="hidden" name="idreserva" value="' . $reg['id'] . '">';
+            echo '<input type="hidden" name="idusuario" value="' . $_SESSION['usuario_id'] . '">';
+            echo '<input type="submit" name="hacerReserva" value="Ver detalles" class="button">';
+            echo '</form>';
+
+            echo '</div>'; 
+        }
+        ?>
+    </div>
 
 
     <script>
